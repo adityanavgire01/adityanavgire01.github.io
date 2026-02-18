@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aditya Navgire — Full Stack & AI Automation Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #080808;
+      --surface:   #111111;
+      --border:    #1e1e1e;
+      --accent:    #02b7ff;
+      --text:      #e8e8e8;
+      --muted:     #555;
+      --font-head: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-logo { font-family: var(--font-head); font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(2,183,255,0.07) 0%, transparent 70%);
+      top: -150px; left: -150px;
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(2,183,255,0.3);
+      padding: 0.3rem 0.8rem; border-radius: 2px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-name {
+      font-family: var(--font-head);
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800; line-height: 1.0; letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero-name span { color: var(--accent); }
+    .hero-subtitle { font-size: 1rem; color: var(--muted); max-width: 540px; margin-bottom: 2.5rem; animation: fadeUp 0.6s 0.2s ease both; }
+    .hero-subtitle strong { color: var(--text); }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.6rem;
+      font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em;
+      border-radius: 2px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-primary { background: var(--accent); color: #000; font-weight: 500; border: none; }
+    .btn-primary:hover { background: #00a8ef; transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+    /* SECTION */
+    .section-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    .section-title { font-family: var(--font-head); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 3rem; line-height: 1.1; }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .about-text p { color: #aaa; margin-bottom: 1rem; font-size: 0.95rem; }
+    .about-text p strong { color: var(--text); }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .stat-box { background: var(--surface); padding: 1.5rem; text-align: center; }
+    .stat-num { font-family: var(--font-head); font-size: 2.5rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 0.25rem; }
+    .stat-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+    /* EXPERIENCE */
+    .exp-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .exp-card {
+      background: var(--surface); padding: 2rem;
+      position: relative; overflow: hidden; transition: background 0.2s;
+    }
+    .exp-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+      background: var(--accent); transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s ease;
+    }
+    .exp-card:hover { background: #141414; }
+    .exp-card:hover::before { transform: scaleY(1); }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; gap: 1rem; flex-wrap: wrap; }
+    .exp-role { font-family: var(--font-head); font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
+    .exp-company { color: var(--accent); font-size: 0.85rem; margin-bottom: 0.25rem; }
+    .exp-period { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; white-space: nowrap; padding-top: 0.2rem; }
+    .exp-bullets { margin-top: 0.75rem; padding-left: 1rem; }
+    .exp-bullets li { font-size: 0.85rem; color: #888; margin-bottom: 0.4rem; }
+    .exp-bullets li::marker { color: var(--accent); }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .skill-category { background: var(--surface); padding: 1.5rem; }
+    .skill-category-title { font-family: var(--font-head); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-tag { font-size: 0.72rem; padding: 0.25rem 0.6rem; background: var(--bg); border: 1px solid var(--border); border-radius: 2px; color: #aaa; transition: all 0.2s; }
+    .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* LEARNING BANNER */
+    .learning-banner {
+      margin-top: 3rem;
+      border: 1px solid rgba(2,183,255,0.2);
+      background: rgba(2,183,255,0.04);
+      padding: 1rem 1.5rem; border-radius: 2px;
+      display: flex; align-items: center; gap: 1rem;
+      font-size: 0.8rem; color: #888;
+    }
+    .learning-banner span { color: var(--accent); font-weight: 500; white-space: nowrap; }
+
+    /* PROJECTS */
+    .projects-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .project-card {
+      background: var(--surface); padding: 2rem;
+      display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: start;
+      transition: background 0.2s; position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+      background: var(--accent); transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s ease;
+    }
+    .project-card:hover { background: #141414; }
+    .project-card:hover::before { transform: scaleY(1); }
+    .proj-num { font-size: 0.7rem; color: var(--muted); padding-top: 0.2rem; font-weight: 500; }
+    .proj-title { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+    .proj-desc { font-size: 0.85rem; color: #777; margin-bottom: 0.75rem; max-width: 520px; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .proj-tag { font-size: 0.65rem; padding: 0.2rem 0.5rem; background: rgba(2,183,255,0.06); border: 1px solid rgba(2,183,255,0.15); color: var(--accent); border-radius: 2px; letter-spacing: 0.05em; }
+    .proj-links { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end; }
+    .proj-link { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border); padding: 0.3rem 0.7rem; border-radius: 2px; transition: all 0.2s; white-space: nowrap; }
+    .proj-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* RESUME */
+    #resume { text-align: center; }
+    .resume-box { display: inline-flex; flex-direction: column; align-items: center; gap: 1.5rem; border: 1px solid var(--border); padding: 3rem 4rem; background: var(--surface); position: relative; }
+    .resume-box::before, .resume-box::after { content: ''; position: absolute; width: 12px; height: 12px; border-color: var(--accent); border-style: solid; }
+    .resume-box::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .resume-box::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+    .resume-icon { font-size: 2rem; line-height: 1; }
+    .resume-title { font-family: var(--font-head); font-size: 1.5rem; font-weight: 700; }
+    .resume-sub { font-size: 0.8rem; color: var(--muted); }
+
+    /* FOOTER */
+    footer { padding: 2rem 0; }
+    footer .container { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .footer-copy { font-size: 0.75rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 680px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .project-card { grid-template-columns: auto 1fr; }
+      .proj-links { flex-direction: row; grid-column: 1 / -1; }
+      .resume-box { padding: 2rem; }
+      nav .nav-links { display: none; }
+      footer .container { flex-direction: column; gap: 1rem; text-align: center; }
+      .exp-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <div class="nav-logo">AN_</div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#resume">Resume</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="container hero-content">
+      <div class="hero-tag">Open to opportunities · Pune, India</div>
+      <h1 class="hero-name">Aditya<br /><span>Navgire.</span></h1>
+      <p class="hero-subtitle">
+        <strong>Full Stack (MERN) &amp; AI Automation Developer.</strong><br />
+        I build production-grade web apps and intelligent automation workflows —
+        from React UIs to AI agents using n8n, Make, and Zapier.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects →</a>
+        <a href="#resume" class="btn btn-outline">Download Resume</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label">01 / About</div>
+      <h2 class="section-title reveal">Who I Am</h2>
+      <div class="about-grid reveal">
+        <div class="about-text">
+          <p>
+            I'm <strong>Aditya Navgire</strong>, a Computer Engineering graduate from
+            <strong>P.E.S. Modern College of Engineering, Pune</strong> (CGPA 8.1),
+            passionate about building things that work at scale.
+          </p>
+          <p>
+            On the dev side, I craft full-stack applications with the <strong>MERN stack</strong> —
+            React frontends, Node/Express APIs, and MongoDB. On the automation side,
+            I design intelligent workflows with <strong>n8n, Make, and Zapier</strong>,
+            connecting LLMs, APIs, and databases to automate real business processes.
+          </p>
+          <p>
+            I've shipped <strong>150+ automation workflows</strong> across internships and freelance work,
+            and I'm always exploring what's next — currently diving into DevOps, Voice Agents, and Transformers.js.
+          </p>
+        </div>
+        <div>
+          <div class="about-stats">
+            <div class="stat-box">
+              <div class="stat-num">8.1</div>
+              <div class="stat-label">CGPA</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">150+</div>
+              <div class="stat-label">Automations</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">50+</div>
+              <div class="stat-label">Client Workflows</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">3+</div>
+              <div class="stat-label">AI Projects</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-label">02 / Experience</div>
+      <h2 class="section-title reveal">Where I've Worked</h2>
+
+      <!--
+        HOW TO ADD EXPERIENCE:
+        Copy one .exp-card block and update the role, company, period, and bullet points.
+      -->
+      <div class="exp-list reveal">
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">AI Automation Intern</div>
+              <div class="exp-company">Technobridge · Hinjawadi, Pune</div>
+            </div>
+            <div class="exp-period">Oct 2024 – Jan 2025</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Designed 100+ automation workflows using n8n, Zapier, and Make.com — including social media scheduling for Instagram, Facebook, LinkedIn, and GBL.</li>
+            <li>Built data extraction pipelines for Marketiquest, automating market intelligence collection and generating domain-specific trend reports.</li>
+            <li>Developed automated web scrapers to aggregate real-time job market data and competitor insights, piped into internal dashboards.</li>
+          </ul>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">AI Automation & Full-Stack Engineer</div>
+              <div class="exp-company">Freelance · Remote</div>
+            </div>
+            <div class="exp-period">Jul 2025 – Sep 2025</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Delivered 50+ custom automation workflows for clients — including a WhatsApp Business API integration for automated customer support.</li>
+            <li>Built full-stack MERN solutions for local businesses and non-profits (ISKCON), focusing on responsive UI and scalable backend architecture.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-label">03 / Skills</div>
+      <h2 class="section-title reveal">Tech Stack</h2>
+
+      <!--
+        HOW TO ADD A SKILL CATEGORY:
+        Copy one .skill-category block, change the title and add/remove .skill-tag spans.
+      -->
+      <div class="skills-grid reveal">
+        <div class="skill-category">
+          <div class="skill-category-title">Frontend</div>
+          <div class="skill-tags">
+            <span class="skill-tag">React.js</span>
+            <span class="skill-tag">Next.js</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">Tailwind CSS</span>
+            <span class="skill-tag">HTML / CSS</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-category-title">Backend</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Express.js</span>
+            <span class="skill-tag">REST APIs</span>
+            <span class="skill-tag">MongoDB</span>
+            <span class="skill-tag">Mongoose</span>
+            <span class="skill-tag">JWT Auth</span>
+            <span class="skill-tag">Socket.io</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-category-title">AI & Automation</div>
+          <div class="skill-tags">
+            <span class="skill-tag">n8n</span>
+            <span class="skill-tag">Make.com</span>
+            <span class="skill-tag">Zapier</span>
+            <span class="skill-tag">AI Agents</span>
+            <span class="skill-tag">OpenAI API</span>
+            <span class="skill-tag">LangChain</span>
+            <span class="skill-tag">RAG</span>
+            <span class="skill-tag">ChromaDB</span>
+            <span class="skill-tag">LLMs</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-category-title">Languages & Concepts</div>
+          <div class="skill-tags">
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">SQL / NoSQL</span>
+            <span class="skill-tag">DSA</span>
+            <span class="skill-tag">OOPs</span>
+            <span class="skill-tag">System Design</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-category-title">Tools & DevOps</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Git & GitHub</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">Postman</span>
+            <span class="skill-tag">Linux (WSL)</span>
+            <span class="skill-tag">VS Code</span>
+            <span class="skill-tag">MongoDB Compass</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="learning-banner reveal">
+        <span>Currently Exploring →</span>
+        DevOps (Docker / Kubernetes) &nbsp;·&nbsp; Agentic AI & Voice Agents &nbsp;·&nbsp; Transformers.js
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-label">04 / Projects</div>
+      <h2 class="section-title reveal">Selected Work</h2>
+
+      <!--
+        HOW TO ADD A NEW PROJECT:
+        1. Copy a .project-card block below.
+        2. Update: proj-num, proj-title, proj-desc, proj-tags, and the href on .proj-link buttons.
+        3. Remove the "Live ↗" link if there's no live demo.
+      -->
+      <div class="projects-list reveal">
+
+        <div class="project-card">
+          <span class="proj-num">01</span>
+          <div>
+            <div class="proj-title">ChatPDF — RAG Document Assistant</div>
+            <div class="proj-desc">
+              A RAG-based document assistant that chunks PDFs, stores embeddings in ChromaDB,
+              and retrieves context for accurate GPT-4 responses. Ask anything about any document.
+            </div>
+            <div class="proj-tags">
+              <span class="proj-tag">RAG</span>
+              <span class="proj-tag">ChromaDB</span>
+              <span class="proj-tag">GPT-4</span>
+              <span class="proj-tag">React</span>
+              <span class="proj-tag">LangChain</span>
+            </div>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/adityanavgire01" target="_blank" class="proj-link">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <span class="proj-num">02</span>
+          <div>
+            <div class="proj-title">AI Walkie-Talkie — Voice Agent</div>
+            <div class="proj-desc">
+              A full-duplex AI Voice Agent with a complete STT → LLM → TTS pipeline over WebSocket.
+              Features session management and context windows for natural multi-turn conversations.
+            </div>
+            <div class="proj-tags">
+              <span class="proj-tag">LLM</span>
+              <span class="proj-tag">STT / TTS</span>
+              <span class="proj-tag">WebSocket</span>
+              <span class="proj-tag">Node.js</span>
+            </div>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/adityanavgire01" target="_blank" class="proj-link">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <span class="proj-num">03</span>
+          <div>
+            <div class="proj-title">X (Twitter) Clone</div>
+            <div class="proj-desc">
+              Full-featured social media platform with JWT auth via Passport.js, tweet posting,
+              media uploads (Multer), real-time features with Socket.io, and a responsive React UI.
+            </div>
+            <div class="proj-tags">
+              <span class="proj-tag">MERN Stack</span>
+              <span class="proj-tag">JWT</span>
+              <span class="proj-tag">Socket.io</span>
+              <span class="proj-tag">Passport.js</span>
+              <span class="proj-tag">Multer</span>
+            </div>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/adityanavgire01" target="_blank" class="proj-link">GitHub ↗</a>
+            <!-- Update href below with your live demo URL -->
+            <a href="#" target="_blank" class="proj-link">Live ↗</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUME -->
+  <section id="resume">
+    <div class="container" style="display:flex; flex-direction:column; align-items:center;">
+      <div class="section-label">05 / Resume</div>
+      <h2 class="section-title reveal" style="text-align:center;">Get My Resume</h2>
+      <div class="resume-box reveal">
+        <div class="resume-icon">📄</div>
+        <div class="resume-title">Aditya Navgire</div>
+        <div class="resume-sub">Full Stack & AI Automation Developer · Pune, India</div>
+        <!--
+          Upload your PDF as "Aditya_Navgire_Resume.pdf" to the root of your GitHub repo.
+        -->
+        <a href="Aditya_Navgire_Resume.pdf" download="Aditya_Navgire_Resume.pdf" class="btn btn-primary">
+          ↓ Download Resume
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-copy">© 2025 Aditya Navgire · Pune, India</div>
+      <div class="footer-links">
+        <a href="https://github.com/adityanavgire01" target="_blank">GitHub</a>
+        <!-- Update with your actual LinkedIn URL -->
+        <a href="https://linkedin.com/in/aditya-navgire" target="_blank">LinkedIn</a>
+        <a href="mailto:aditya.p.navgire@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
